@@ -24,7 +24,7 @@
           <h1 class="title">{{ thread.title }}</h1>
           <p class="subtitle">
             <i class="fas fa-user-circle"></i>
-            {{ thread.user.name }}
+            {{ userName }}
             <small class="media-content-date has-text-grey-light">
               <i class="fas fa-calendar-alt"></i>
               {{ thread.created_at | formatedDate }}
@@ -50,9 +50,18 @@ export default {
   },
   data() {
     return {
-      thread: "",
+      thread: {},
       slug: this.$route.params.slug
     };
+  },
+  computed: {
+    userName() {
+      if (this.thread && this.thread.user) {
+        return this.thread.user.name;
+      }
+
+      return "";
+    }
   },
   created() {
     getThread(this.slug)
